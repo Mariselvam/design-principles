@@ -87,22 +87,25 @@ public class FileReader {
 Now this class violates both SRP and OCP priciples. These violations can be fixed as below.
 
 
-```mermaid
-classDiagram
-    FileReader <|-- TextFileReader
-    FileReader <|-- PdfFileReader
-    class FileReader{
-        <<abstract class>>
-        +fileName: String
-        +fileSize: double
+```
+public abstract class FileReader {
+    private String fileName;
+    private double fileSize;
 
-        +readFile()
+    public abstract void readFile();
+}
+
+public class TextFileReader extends FileReader {
+    @override
+   public void readFile() {
+
+   }
+}
+
+public class PdfFileReader extends FileReader {
+    @override
+    publiv void readFile() {
+
     }
-    class TextFileReader{
-        +readFile()
-    }
-    class PdfFileReader{
-        +readFile()
-    }
-   
+}
 ```
