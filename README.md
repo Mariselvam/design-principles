@@ -46,4 +46,63 @@ So we have to choose the option3 to extend the behavior of a class. This option3
 If we don't want to open an existing class and make some changes very often, then that should have only one responsibility. Hence it will have only one reason to change.
 This is called as **Single Responsibility principle**.
 
+Following example illustrates this relationship.
 
+```
+Initially this class supports only one type of file '.txt' file.
+
+public class FileReader {
+    private String fileName;
+    private double fileSize;
+
+    //reads only .txt file
+    public void readFile() {
+
+    }
+}
+```
+
+We want to extend this class to support ".pdf"  files as well. then this class will become like below.
+
+```
+public class FileReader {
+    private String fileName;
+    private double fileSize;
+    private String fileType;
+
+    public void readFile() {
+        switch(this.fileType) {
+            case "text" :
+                //read text file
+                break;
+
+            case "pdf" :
+                // read pdf file
+                break;
+        }
+    }
+}
+```
+
+Now this class violates both SRP and OCP priciples. These violations can be fixed as below.
+
+
+```mermaid
+classDiagram
+    FileReader <|-- TextFileReader
+    FileReader <|-- PdfFileReader
+    class FileReader{
+        <<abstract class>>
+        +fileName: String
+        +fileSize: double
+
+        +readFile()
+    }
+    class TextFileReader{
+        +readFile()
+    }
+    class PdfFileReader{
+        +readFile()
+    }
+   
+```
